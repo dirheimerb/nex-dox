@@ -1,5 +1,5 @@
-import { SearchDialog } from '@/components/SearchDialog'
-import Image from 'next/image'
+import { SearchDialog } from '@/components/SearchDialog';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -11,5 +11,5 @@ export default function Home() {
         </div>
       </div>
     </main>
-  )
+  );
 }

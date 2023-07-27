@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
+import * as React from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -9,48 +9,53 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { useCompletion } from 'ai/react'
-import { X, Loader, User, Frown, CornerDownLeft, Search, Wand } from 'lucide-react'
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { useCompletion } from 'ai/react';
+import {
+  X,
+  Loader,
+  User,
+  Frown,
+  CornerDownLeft,
+  Search,
+  Wand,
+} from 'lucide-react';
 
 export function SearchDialog() {
-  const [open, setOpen] = React.useState(false)
-  const [query, setQuery] = React.useState<string>('')
+  const [open, setOpen] = React.useState(false);
+  const [query, setQuery] = React.useState<string>('');
 
   const { complete, completion, isLoading, error } = useCompletion({
     api: '/api/vector-search',
-  })
+  });
 
   const handleModalToggle = React.useCallback(() => {
-
-    setOpen(!open)
-    setQuery('')
-  }, [open])
+    setOpen(!open);
+    setQuery('');
+  }, [open]);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && e.metaKey) {
-        setOpen(true)
+        setOpen(true);
       }
 
       if (e.key === 'Escape') {
-        console.log('esc')
-        handleModalToggle()
+        console.log('esc');
+        handleModalToggle();
       }
-    }
+    };
 
-    document.addEventListener('keydown', down)
-    return () => document.removeEventListener('keydown', down)
-  }, [handleModalToggle])
-
-
+    document.addEventListener('keydown', down);
+    return () => document.removeEventListener('keydown', down);
+  }, [handleModalToggle]);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault()
-    console.log(query)
-    complete(query)
-  }
+    e.preventDefault();
+    console.log(query);
+    complete(query);
+  };
 
   return (
     <>
@@ -82,10 +87,14 @@ export function SearchDialog() {
           <DialogHeader>
             <DialogTitle>OpenAI powered doc search</DialogTitle>
             <DialogDescription>
-              Build your own ChatGPT style search with Next.js, OpenAI & Supabase.
+              Build your own ChatGPT style search with Next.js, OpenAI &
+              Supabase.
             </DialogDescription>
             <hr />
-            <button className="absolute top-0 right-2 p-2" onClick={() => setOpen(false)}>
+            <button
+              className="absolute top-0 right-2 p-2"
+              onClick={() => setOpen(false)}
+            >
               <X className="h-4 w-4 dark:text-gray-100" />
             </button>
           </DialogHeader>
@@ -97,7 +106,9 @@ export function SearchDialog() {
                   <span className="bg-slate-100 dark:bg-slate-300 p-2 w-8 h-8 rounded-full text-center flex items-center justify-center">
                     <User width={18} />{' '}
                   </span>
-                  <p className="mt-0.5 font-semibold text-slate-700 dark:text-slate-100">{query}</p>
+                  <p className="mt-0.5 font-semibold text-slate-700 dark:text-slate-100">
+                    {query}
+                  </p>
                 </div>
               )}
 
@@ -121,7 +132,10 @@ export function SearchDialog() {
               {completion && !error ? (
                 <div className="flex items-center gap-4 dark:text-white">
                   <span className="bg-green-500 p-2 w-8 h-8 rounded-full text-center flex items-center justify-center">
-                    <Wand width={18} className="text-white" />
+                    <Wand
+                      width={18}
+                      className="text-white"
+                    />
                   </span>
                   <h3 className="font-semibold">Answer:</h3>
                   {completion}
@@ -158,7 +172,10 @@ export function SearchDialog() {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit" className="bg-red-500">
+              <Button
+                type="submit"
+                className="bg-red-500"
+              >
                 Ask
               </Button>
             </DialogFooter>
@@ -166,5 +183,5 @@ export function SearchDialog() {
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }
